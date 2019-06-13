@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+    
+  
+    <context:property-placeholder ignore-resource-not-found="true" location="classpath:config.properties"/>      
+
+    <context:annotation-config />
+    <!-- 
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:comp/env/jdbc/TinySun</value>
+		</property>
+	</bean>
+	 -->
+	<bean id="dataSourceLocal" name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">  
+        <!-- 指定连接数据库的驱动-->  
+        <property name="driverClass" value="${jdbc.driverClassName}"/>  
+        <!-- 指定连接数据库的URL-->  
+        <property name="jdbcUrl" value="${jdbc.url}"/>  
+        <!-- 指定连接数据库的用户名-->  
+        <property name="user" value="${jdbc.username}"/>  
+        <!-- 指定连接数据库的密码-->  
+        <property name="password" value="${jdbc.password}"/>  
+        <!-- 指定连接池中保留的最大连接数. Default:15-->  
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>  
+        <!-- 指定连接池中保留的最小连接数-->  
+        <property name="minPoolSize" value="${jdbc.minPoolSize}"/>  
+        <!-- 指定连接池的初始化连接数  取值应在minPoolSize 与 maxPoolSize 之间.Default:3-->  
+        <property name="initialPoolSize" value="${jdbc.initialPoolSize}"/>  
+        <!-- 最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。 Default:0-->  
+        <property name="maxIdleTime" value="${jdbc.maxIdleTime}"/>  
+        <!-- 当连接池中的连接耗尽的时候c3p0一次同时获取的连接数. Default:3-->  
+        <property name="acquireIncrement" value="${jdbc.acquireIncrement}"/>  
+        <!-- JDBC的标准,用以控制数据源内加载的PreparedStatements数量。  
+        但由于预缓存的statements属于单个connection而不是整个连接池所以设置这个参数需要考虑到多方面的因数.如果maxStatements与maxStatementsPerConnection均为0,则缓存被关闭。Default:0-->  
+        <property name="maxStatements" value="${jdbc.maxStatements}"/>  
+        <!-- 每60秒检查所有连接池中的空闲连接.Default:0 -->  
+        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"/>  
+    </bean>  
+    
+    <!--JDBC事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--基于注解的事务配置-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->  
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource" /> 
+        <property name="typeAliasesPackage" value="com.ssm.model"/> 
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <property name="mapperLocations" value="classpath:mappers/*.xml" />  
+    </bean>  
+        
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+         <property name="basePackage" value="com.ssm.dao"/>
+    </bean>
+    
+    <!--Note: Moved from annomvc-servlet.xml to this place for integrating the transaction -->
+    <context:component-scan base-package="com.ssm.service.impl" />
+    
+        
+</beans>

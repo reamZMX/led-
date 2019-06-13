@@ -1,0 +1,95 @@
+<style>
+
+body {
+	border: 1px solid #BFBFBF;
+	margin: 3% 3%;
+}
+
+.head {
+	background-color: #BFBFBF;
+	width: 95%;
+	height: 55px;
+	margin-left: 2%;
+	align-content: center;
+}
+
+.head_short {
+	background-color: #BFBFBF;
+	width: 95%;
+	height: 35px;
+	margin-left: 2%;
+	align-content: center;
+	padding-top: 10px;
+	margin-bottom: 2%;
+}
+
+.head_long {
+	background-color: #BFBFBF;
+	width: 95%;
+	height: 75px;
+	margin-left: 2%;
+	align-content: center;
+}
+
+table.gridtable {
+	font-family: verdana, arial, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	border-width: 2px;
+	border-color: #666666;
+	/* 	border-collapse: collapse; */
+	max-width: 1200px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #9F9F9F;
+	word-wrap: break-word;
+}
+
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+}
+
+.body_khdr {
+	margin-top: 5%;
+	margin-left: 7%;
+}
+
+.body_khdr_ywmc {
+	margin-top: 50px;
+}
+
+.body_khdr_ywmc select {
+	width: 268px;
+	font-size: 16px;
+}
+
+.body_khdr button {
+	margin-top: 50px;
+	margin-left: 100px;
+	width: 90px;
+	border-radius: 5px;
+	height: 30px;
+}
+
+.mid {
+	width: 95%;
+	height: 10px;
+	margin-left: 2%;
+	border-bottom: 1px solid #BFBFBF;
+}
+
+button {
+	border-radius: 5px;
+}
+</
+style
+>
